@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telecom Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <button onclick="backToMainMenu()">
+        Înapoi la meniul principal
+    </button>
+    <h1>Utilizarea vizualizărilor (cel puțin 2 vizualizări: compusă care să permită operații LMD, respectiv complexă)</h1>
+    <h2>Vizualizare complexă</h2>
+    <h3>Se creează o vizualizare care să cuprindă câte remedieri a efectuat fiecare rol.</h3>
+    <h4>SQL:</h4>
+    <pre>
+        <code>
+            create or replace view remedieri_per_rol as
+            (select rol, count(id_remediere) nr_remedieri
+            from angajati left join remedieri
+                    on (cnp = cnp_angajat)
+            group by rol
+            having rol is not null);
+        </code>
+    </pre>
+
+    <button onclick="create_view_remedieri_per_rol()">
+        Creeaza vizualizarea
+    </button>
+
+    <button onclick="show_view_remedieri_per_rol()">
+        Arată conținutul
+    </button>
+
+    <div id="errorMsgHolder1">
+        <!--- completed by ajax -->
+    </div>
+
+    <!-- Dropdown for table selection -->
+    <!-- Table Display Section -->
+    <div id="tableDisplay1">
+        <!-- Table will be displayed here -->
+    </div>
+
+    <h2>Vizualizare compusă cu acces la operații LMD</h2>
+    <h3>Se creează o vizualizare care să cuprindă facturile clientilor, cu verificarea suplimentară că valoarea plătită trebuie să fie mai mică decât suma de plată.</h3>
+    <h4>SQL:</h4>
+    <pre>
+        <code>
+            create or replace view facturi_clienti as
+            (select nume, prenume, nr_tel, email, 
+                    id_factura, data_emitere, valoare_platita, valoare
+            from clienti join facturi
+                            on (cnp_client = cnp)
+            where valoare_platita <= valoare
+            )
+            with check option constraint FACTURI_CLIENTI_CHK;
+        </code>
+    </pre>
+
+    <button onclick="create_view_facturi_clienti()">
+        Creeaza vizualizarea
+    </button>
+
+    <button onclick="show_view_facturi_clienti()">
+        Arată conținutul
+    </button>
+
+    <div id="errorMsgHolder2">
+        <!--- completed by ajax -->
+    </div>
+
+    <!-- Dropdown for table selection -->
+    <!-- Table Display Section -->
+    <div id="tableDisplay2">
+        <!-- Table will be displayed here -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

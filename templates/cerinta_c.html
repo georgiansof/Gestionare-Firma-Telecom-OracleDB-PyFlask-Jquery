@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telecom Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <button onclick="backToMainMenu()">
+        Înapoi la meniul principal
+    </button>
+    <h1>Afișarea rezultatului unei cereri care extrage informații din cel puțin 3 tabele şi le filtrează cu ajutorul a cel puțin 2 condiții</h1>
+    <h2>Să se afișeze numele, prenumele și numărul de telefon pentru clientii care au facturi emise in 2023 si care nu au avut sesizari deschise la serviciul 'Telefonie mobila nelimitat'</h2>
+    <h3>SQL:</h3>
+    <pre>
+        <code>
+        select distinct nume, prenume, nr_tel
+        from clienti c join facturi f 
+                            on (f.cnp_client = c.cnp)
+                        join servicii_contractate sc
+                            on (c.cnp = sc.cnp_client)
+                        join servicii serv
+                            on (serv.id_serviciu = sc.id_serviciu)
+        where extract(year from f.data_emitere) = 2023 and 
+            not exists(
+                select 'pizza'
+                from sesizari ses
+                where c.nr_tel = ses.tel_client and id_serviciu = (
+                    select id_serviciu
+                    from servicii
+                    where lower(nume_serviciu) = 'telefonie mobila nelimitat'
+                )
+            );
+        </code>
+    </pre>
+
+    <button onclick="execute_sql_page_c()">
+        Execută codul SQL
+    </button>
+
+    <!-- Dropdown for table selection -->
+    <!-- Table Display Section -->
+    <div id="tableDisplay">
+        <!-- Table will be displayed here -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+#sort-div {
+    display: none;
+}
+#columns {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    display: inline-block;
+    margin-right: 10px; /* Optional: Add some space between the list item and the input */
+}
+
+.sorting-priorities input {
+    vertical-align: middle; /* Align the input vertically with the text in the list item */
+    width: 2ch;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"] {
+-webkit-appearance: none;
+margin: 0;
+}

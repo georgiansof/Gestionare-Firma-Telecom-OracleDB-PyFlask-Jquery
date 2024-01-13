@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telecom Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Telecom Manager</h1>
+
+    <!-- Buttons -->
+    <div>
+        <button onclick="location.href='/cerinta_c'" type="button">Cerinta C</button>
+    </div>
+    <div>
+        <button onclick="location.href='/cerinta_d'" type="button">Cerinta D</button>
+    </div>
+    <div>
+        <button onclick="location.href='/cerinta_f'" type="button">Cerinta F</button>
+    </div>
+
+    <!-- Dropdown for table selection -->
+    <div>
+        <label for="tables">Listare tabel:</label>
+        <select id="tables" onchange="fetchCurrentTableColumns()" name="selected_table">
+            {% for table in tables %}
+                <option value="{{ table }}">{{ table }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input id="willSort" type="checkbox" onchange="toggleSortingOptions()"> Sortare? </button>
+        <br>
+        <div id="sort-div">
+            <label>Alegeti prioritatea fiecarei coloane in operatia de sortare. Zero reprezintă faptul că acea coloană nu va conta în sortare. Număr mai mic înseamnă prioritate mai mare. Dacă două coloane au aceeași prioritate, se consideră ordinea lor în tabel.</label>
+            <ol id="columns" name="selected_column">
+                    <!-- will be completed by ajax request -->
+            </ol>
+        </div>
+        <button onclick="showTable()">Arată</button>
+    </div>
+    <br>
+
+    <div id="errorMsgHolder">
+        <!--- completed by ajax -->
+    </div>
+
+    <!-- Table Display Section -->
+    <div id="tableDisplay">
+        <!-- Table will be displayed here -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

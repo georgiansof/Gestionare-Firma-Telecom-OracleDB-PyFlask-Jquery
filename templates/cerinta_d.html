@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Telecom Manager</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <button onclick="backToMainMenu()">
+        Înapoi la meniul principal
+    </button>
+    <h1>Afișarea rezultatului unei cereri care folosește funcții grup și o clauza having</h1>
+    <h2>Să se afișeze rolul comun al angajaților cu același manager, numărul lor, precum și cnp-ul managerului și numele său.</h2>
+    <h3>SQL:</h3>
+    <pre>
+        <code>
+        select rol, 
+                count(cnp) nr_angajati,
+                (select nume || ' ' || prenume
+                from angajati a2
+                where a.cnp_manager = a2.cnp) nume_manager,
+                cnp_manager
+        from angajati a
+        group by rol, cnp_manager
+        having count(cnp) > 1;
+        </code>
+    </pre>
+
+    <button onclick="execute_sql_page_d()">
+        Execută codul SQL
+    </button>
+
+    <!-- Dropdown for table selection -->
+    <!-- Table Display Section -->
+    <div id="tableDisplay">
+        <!-- Table will be displayed here -->
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
