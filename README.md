@@ -3,5 +3,5 @@ Link prezentare (făcută pentru facultate):
 
 Proiect efectuat folosind Python (Flask) și vanilla javascript (doar cu jQuery). Pentru baza de date s-a folosit Oracle XE.
 
-Diagramaă conceptuală:
+Diagramă conceptuală:
 ![img_url](https://imgur.com/q5UPDWu.png)
